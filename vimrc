@@ -245,67 +245,6 @@ nnoremap <Up> kddpk
 nnoremap <Down> ddp
 "nnoremap <Right> xp
 
-function! P_Compile()
-	let i =  expand('%:e')
-	if ( i == "rb" )
-		let c =  " ruby " .expand('%:p') 
-		return c
-	elseif (i == "cpp" )
-		let c =  " g++ " .expand('%:p') ." -o " .expand('%:p:r') ." && " .expand('%:p:r')
-		return c
-	elseif ( i == "c" )
-		let c =  " gcc " .expand('%:p') ." -o " .expand('%:p:r') ." && " .expand('%:p:r')
-		return c
-	elseif ( i == "java" )
-		let c =  " javac " .expand('%:p') ." &&  java -classpath " .expand('%:p:h')." ".expand('%:t:r')
-		return c
-	elseif ( i == "pl" )
-		let c =  " perl " .expand('%:p') 
-		return c
-	elseif ( i == "py" )
-		let c =  " python " .expand('%:p') 
-		return c
-	else
-		let c = " echo lol no compiler found "
-		return c
-	endif
-endfunc
-
-
-function! K_Compile()
-	let i =  expand('%:e')
-		if (i == "cpp" )
-		let c =  " g++ " .expand('%:p') ." -lcrypto -o " .expand('%:p:r') ." && " .expand('%:p:r')
-	return c
-		elseif ( i == "c" )
-		let c =  " gcc " .expand('%:p') ." -lcrypto -o " .expand('%:p:r') ." && " .expand('%:p:r')
-	return c
-		else
-		let c = " echo lol no compiler found "
-	return c
-endif
-endfunc
-
-nmap <leader>q	:w \| call VimuxRunCommand(P_Compile()) <CR>
-nmap <leader>w	:w \| call VimuxRunCommand(K_Compile()) <CR>
-nmap <leader>s	:w \| call VimuxRunCommand("rspec --f-f") <CR>
-nmap <leader>S	:w \| call VimuxRunCommand("learn && learn submit && exit") <CR>
-nmap <leader>Q	:w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec/*" .expand('%:t:r')."*") <CR>
-nmap <leader>1q	:w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec/*" .expand('%:t:r')."* --f-f") <CR>
-nmap <leader>1s	:w \| call VimuxRunCommand(" rspec " .expand('%:p'). ":".line('.')) <CR>
-
-
-nmap <C-w>n :NERDTreeToggle<cr>
-
-function! NumberToggle()
-if(&relativenumber == 1)
-	set relativenumber!
-  else
-	set relativenumber
-  endif
-endfunc
-
-nnoremap <leader>z :call NumberToggle()<cr>
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
