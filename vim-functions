@@ -1,9 +1,31 @@
 "VIMUX plugin is required for the following functions
 
+nmap <leader>pry :call VimuxRunCommand(" pry ") <CR>
+nmap <leader>pe :call VimuxRunCommand(" exit ") <CR>
+nmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
+vmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
+
+nmap <C-w>n :NERDTreeToggle<cr>
+
+function! NumberToggle()
+if(&relativenumber == 1)
+	set relativenumber!
+  else
+	set relativenumber
+  endif
+endfunc
+
+nnoremap <leader>z :call NumberToggle()<cr>
+nmap <leader>q	:w \| call VimuxRunCommand(P_Compile()) <CR>
+nmap <leader>w	:w \| call VimuxRunCommand(K_Compile()) <CR>
+
+
+
+
 function! P_Compile()
 	let i =  expand('%:e')
 	if ( i == "rb" )
-		let c =  " ruby " .expand('%:p') 
+		let c =  " ruby " .expand('%:p')
 		return c
 	elseif (i == "cpp" )
 		let c =  " g++ " .expand('%:p') ." -o " .expand('%:p:r') ." && " .expand('%:p:r')
@@ -15,10 +37,10 @@ function! P_Compile()
 		let c =  " javac " .expand('%:p') ." &&  java -classpath " .expand('%:p:h')." ".expand('%:t:r')
 		return c
 	elseif ( i == "pl" )
-		let c =  " perl " .expand('%:p') 
+		let c =  " perl " .expand('%:p')
 		return c
 	elseif ( i == "py" )
-		let c =  " python " .expand('%:p') 
+		let c =  " python " .expand('%:p')
 		return c
 	else
 		let c = " echo lol no compiler found "
@@ -41,17 +63,3 @@ function! K_Compile()
 endif
 endfunc
 
-
-nmap <C-w>n :NERDTreeToggle<cr>
-
-function! NumberToggle()
-if(&relativenumber == 1)
-	set relativenumber!
-  else
-	set relativenumber
-  endif
-endfunc
-
-nnoremap <leader>z :call NumberToggle()<cr>
-nmap <leader>q	:w \| call VimuxRunCommand(P_Compile()) <CR>
-nmap <leader>w	:w \| call VimuxRunCommand(K_Compile()) <CR>

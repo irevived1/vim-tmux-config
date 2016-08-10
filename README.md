@@ -33,3 +33,5 @@
  - Ctrl + h/j/k/l = move between panes, works with vim panes as well
 
 Note: copy mode is set to vi-mode
+
+####Colors and fonts are from other repositories made by other users. Thank them for it!

@@ -266,6 +266,12 @@ nmap <leader>Q  :w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec
 nmap <leader>1q :w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec/*" .expand('%:t:r')."* --f-f") <CR>
 nmap <leader>1s :w \| call VimuxRunCommand(" rspec " .expand('%:p'). ":".line('.')) <CR>
 
+
+nmap <leader>pry :call VimuxRunCommand(" pry ") <CR>
+nmap <leader>pe :call VimuxRunCommand(" exit ") <CR>
+nmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
+vmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
+
 "retab
 nmap <C-w>t :set tabstop=2 \| retab! \| set tabstop=4 <cr>
 nmap <C-w>n :NERDTreeToggle<cr>
