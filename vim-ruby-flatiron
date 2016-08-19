@@ -13,7 +13,7 @@ call vundle#begin('~/.vim/bundle/')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Syntastic'
 Plugin 'Vim-R-plugin'
 Plugin 'vimux'
@@ -30,17 +30,24 @@ Plugin 'vim-scripts/AutoComplPop'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'edkolev/promptline.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
 "Plugin 'vim-scripts/Conque-Shell'
 
-"Plugin 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 "Plugin 'valloric/youcompleteme'
 Bundle 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'roosta/srcery'
+Plugin 'alvan/vim-closetag'
+Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-endwise'
+Plugin 'easymotion/vim-easymotion'
+"Plugin 'Raimondi/delimitMate'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
 " Git plugin not hosted on GitHub
@@ -117,15 +124,45 @@ endif
 "let b:surround_{char2nr('-')} = "<% \r %>"
 """""""""""""""""""""FOR eruby.vim"""""""""""""""""""""
 """""""""""""""rvm implode, then reinstall jekyll with gem install jekyll
+let mapleader = ","
+"globals
+
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 0
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby compiler ruby
+let g:closetag_filenames = "*.erb,*.html.erb,*.html,*.xhtml,*.phtml"
 set omnifunc=syntaxcomplete#Complete
 set laststatus=2
 let g:airline_powerline_fonts = 1
 
+"let g:nerdtree_tabs_open_on_console_startup=1
+"Grab the latest version and stick this in ~/.vim/nerdtree_plugin/override_tab_mapping.vim
+" call NERDTreeAddKeyMap({'key': 't', 'callback': 'NERDTreeMyOpenInTab', 'scope': 'FileNode', 'override': 1 })
+" function NERDTreeMyOpenInTab(node)
+"     call a:node.open({'reuse': "all", 'where': 't'})
+" endfunction
+
+
+let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:airline#extensions#tabline#enabled = 1
+map ƒ <Plug>(easymotion-bd-f)
+
+""fold""
+set foldmethod=syntax
+set foldlevelstart=8
+
+"let javaScript_fold=1         " JavaScript
+"let perl_fold=1               " Perl
+"let php_folding=1             " PHP
+"let r_syntax_folding=1        " R
+"let ruby_fold=1               " Ruby
+"let sh_fold_enabled=1         " sh
+"let vimsyn_folding='af'       " Vim script
+"let xml_syntax_folding=1      " XML
+
+"set foldmethod=indent
+"set foldnestmax=2
 
 "let g:Powerline_symbols = 'fancy'
 set number
@@ -135,20 +172,23 @@ set relativenumber
 "solarized theme here
 "/Users/Whisky/.vim/bundle/vim-airline-themes/autoload/airline/themes
 let g:promptline_theme = 'airline'
-let g:airline_theme='powerlineish'
+"let g:airline_theme='powerlineish'
+let g:airline_theme='bubblegum'
 "let g:solarized_termcolors=256
 "colorscheme solarized
 "colorscheme srcery
-colorscheme atomdark
-"colorscheme srcery
+"colorscheme atomdark
+colorscheme gruvbox
 hi Normal ctermbg=none
-"set background=dark
+
+set background=dark
+
 "hi Normal ctermbg=none
 
 set cursorline
 "hi CursorLine cterm=bold ctermbg=0
 "hi Comment  guifg=#80a0ff ctermfg=7
-highlight LineNr ctermfg=none ctermbg=none
+"highlight LineNr ctermfg=red ctermbg=none
 
 
 "hi CursorLine   cterm=NONE ctermbg=8 ctermfg=white
@@ -202,24 +242,26 @@ set clipboard=unnamed
 "save
 inoremap ß <ESC>:w <CR>
 
+imap ¥ <C-y>,
+
 "tab completion
-function! Tab_Or_Complete()
-  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-N>"
-  else
-    return "\<Tab>"
-  endif
-endfunction
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-inoremap <S-Tab> <C-P>
+" function! Tab_Or_Complete()
+"   if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+"     return "\<C-N>"
+"   else
+"     return "\<Tab>"
+"   endif
+" endfunction
+" inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+" inoremap <S-Tab> <C-P>
 
+nnoremap <Tab> gt 
+nnoremap <S-Tab> gT
 
-
-nnoremap <Tab> :bn!<CR>
-nnoremap <S-Tab> :bp!<CR>
+nnoremap † :bn!<CR>
+nnoremap ˇ :bp!<CR>
 nnoremap œ :bd<CR>
 nnoremap <leader>t :TagbarToggle<CR>
-
 
 "let g:tmux_navigator_no_mappings = 1
 "nnoremap <silent>  ˙ :TmuxNavigateLeft<cr>
@@ -240,12 +282,20 @@ nnoremap å "jp
 nnoremap Ω "kp
 nnoremap ≈ "lp
 
+inoremap <M-h> <C-o>h
 inoremap ˙ <C-o>h
 inoremap ∆ <C-o>gj
 inoremap ˚ <C-o>gk
 inoremap ¬ <C-o>l
 inoremap ∑ <C-o>w
 inoremap ∫ <C-o>b
+inoremap ø <C-o>o
+inoremap Ø <C-o>O
+
+nnoremap <CR> o<ESC>
+
+inoremap <C-z> <space>
+nnoremap <C-z> <space>
 
 inoremap … <ESC>
 vnoremap … <ESC>
@@ -257,6 +307,7 @@ nnoremap k gk
 nnoremap <Up> kddpk
 nnoremap <Down> ddp
 "nnoremap <Right> xp
+
 
 nmap <leader>q	:w \| call VimuxRunCommand(" ruby " .expand('%:p') ) <CR>
 nmap <leader>s  :w \| call VimuxRunCommand("rspec --f-f") <CR>
