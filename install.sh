@@ -4,7 +4,8 @@ brew update
 brew upgrade
 
 brew install tmux
-brew install vim
+brew uninstall vim
+brew install vim --with-lua
 
 PA=~/Documents/vim-tmux-config
 
@@ -17,8 +18,6 @@ cp $PA/tmux.conf ~/.tmux.conf
 
 vim +BundleInstall +qall
 
-# vim $PA/tmux.conf
-
 ls ~/Library/Fonts/
 
 if [ $? = 0 ]; then
@@ -27,18 +26,22 @@ else
   mkdir -p ~/Library/Fonts/
 fi
 
+mkdir ~/.vim/colors/
+
+cp $PA/colors/* ~/.vim/colors/
+
 cp $PA/fonts/* ~/Library/Fonts/
 
 cat $PA/erubysign >> ~/.vim/bundle/vim-ruby/ftplugin/eruby.vim
 
 SN=~/.vim/bundle/vim-snippets/snippets
 
-cat $SN/rails.snippets >> $SN/ruby.snippets
+# cat $SN/rails.snippets >> $SN/ruby.snippets
 
 cat $SN/html.snippets >> $SN/eruby.snippets
 
 brew install python3
 
-cd ~/.vim/bundle/YouCompleteMe && python3 ./install.py
+# cd ~/.vim/bundle/YouCompleteMe && python3 ./install.py --clang-completer
 
 rm -rf ~/vim-tmux-config
