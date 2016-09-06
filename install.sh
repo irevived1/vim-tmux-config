@@ -7,34 +7,34 @@ brew install tmux
 brew uninstall vim
 brew install vim --with-lua
 
-PA=~/Documents/vim-tmux-config
+PA=$HOME/Documents/vim-tmux-config
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
-cp $PA/vim-ruby-flatiron ~/.vimrc
-cp $PA/tmux.conf ~/.tmux.conf
+cp $PA/vim-ruby-flatiron $HOME/.vimrc
+cp $PA/tmux.conf $HOME/.tmux.conf
 
 vim +BundleInstall +qall
 
-ls ~/Library/Fonts/
+ls $HOME/Library/Fonts/
 
 if [ $? = 0 ]; then
   echo Good
 else
-  mkdir -p ~/Library/Fonts/
+  mkdir -p $HOME/Library/Fonts/
 fi
 
-mkdir ~/.vim/colors/
+mkdir $HOME/.vim/colors/
 
-cp $PA/colors/* ~/.vim/colors/
+cp $PA/colors/* $HOME/.vim/colors/
 
-cp $PA/fonts/* ~/Library/Fonts/
+cp $PA/fonts/* $HOME/Library/Fonts/
 
-cat $PA/erubysign >> ~/.vim/bundle/vim-ruby/ftplugin/eruby.vim
+cat $PA/erubysign >> $HOME/.vim/bundle/vim-ruby/ftplugin/eruby.vim
 
-SN=~/.vim/bundle/vim-snippets/snippets
+SN=$HOME/.vim/bundle/vim-snippets/snippets
 
 # cat $SN/rails.snippets >> $SN/ruby.snippets
 
@@ -44,4 +44,4 @@ brew install python3
 
 # cd ~/.vim/bundle/YouCompleteMe && python3 ./install.py --clang-completer
 
-rm -rf ~/vim-tmux-config
+rm -rf $HOME/vim-tmux-config
