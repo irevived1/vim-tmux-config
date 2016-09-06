@@ -7,7 +7,7 @@ brew install tmux
 brew uninstall vim
 brew install vim --with-lua
 
-PA=$HOME/Documents/vim-tmux-config
+PA=$HOME/vim-tmux-config
 
 git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 
