@@ -16,8 +16,6 @@ git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.v
 cp $PA/vim-ruby-flatiron $HOME/.vimrc
 cp $PA/tmux.conf $HOME/.tmux.conf
 
-vim +BundleInstall +qall
-
 ls $HOME/Library/Fonts/
 
 if [ $? = 0 ]; then
@@ -31,6 +29,8 @@ mkdir $HOME/.vim/colors/
 cp $PA/colors/* $HOME/.vim/colors/
 
 cp $PA/fonts/* $HOME/Library/Fonts/
+
+vim +BundleInstall +qall
 
 cat $PA/erubysign >> $HOME/.vim/bundle/vim-ruby/ftplugin/eruby.vim
 
