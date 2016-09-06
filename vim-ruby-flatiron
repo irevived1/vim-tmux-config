@@ -1,8 +1,12 @@
 set nocompatible
 set encoding=utf-8
-let &t_8f="\e[38;2;%ld;%ld;%ldm"
-let &t_8b="\e[48;2;%ld;%ld;%ldm"
-set termguicolors
+
+if (has('termguicolors')) && (has('iTerm.app'))
+  let &t_8f="\e[38;2;%ld;%ld;%ldm"
+  let &t_8b="\e[48;2;%ld;%ld;%ldm"
+  set termguicolors
+endif
+
 " execute "set t_8f=\e[38;2;%lu;%lu;%lum"
 " execute "set t_8b=\e[48;2;%lu;%lu;%lum"
 " be iMproved, required
