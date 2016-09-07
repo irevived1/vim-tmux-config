@@ -6,7 +6,11 @@
 ```
 export TERM=xterm-256color
 ```
+###Run the following command in your bash to see working TrueColor:
 
+```
+curl -s https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh | bash
+```
 
 ###vim config with mapping and suggested plugins
 *vimrc*
