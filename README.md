@@ -2,6 +2,12 @@
 
 ##These config files are meant for osx using iTerm2
 
+###If colors are not displaying correctly within tmux, add this into your .bashrc or .bash_profile:
+```
+export TERM=xterm-256color
+```
+
+
 ###vim config with mapping and suggested plugins
 *vimrc*
 
