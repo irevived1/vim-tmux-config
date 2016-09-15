@@ -63,6 +63,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'Shougo/neocomplete.vim'
 
+Plugin 'sheerun/vim-polyglot'
+Plugin 'ap/vim-css-color'
 
 " Plugin 'MarcWeber/vim-addon-mw-utils'
 " Plugin 'tomtom/tlib_vim'

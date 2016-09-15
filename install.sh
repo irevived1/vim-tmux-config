@@ -34,11 +34,11 @@ vim +BundleInstall +qall
 
 cat $PA/erubysign >> $HOME/.vim/bundle/vim-ruby/ftplugin/eruby.vim
 
-SN=$HOME/.vim/bundle/vim-snippets/snippets
+# SN=$HOME/.vim/bundle/vim-snippets/snippets
 
 # cat $SN/rails.snippets >> $SN/ruby.snippets
 
-cat $SN/html.snippets >> $SN/eruby.snippets
+# cat $SN/html.snippets >> $SN/eruby.snippets
 
 brew install python3
 
