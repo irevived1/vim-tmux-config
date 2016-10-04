@@ -450,11 +450,18 @@ endfunc
 
 nmap <leader>q  :w \| call VimuxRunCommand(P_Compile()) <CR>
 nmap <leader>k  :w \| call VimuxRunCommand("!!") <CR>
-nmap <leader>s  :w \| call VimuxRunCommand("rspec --f-f") <CR>
-nmap <leader>S  :w \| call VimuxRunCommand("learn && learn submit") <CR>
+" nmap <leader>k  :w \| call VimuxRunLastCommand() <CR>
+nmap <Leader>co :call VimuxOpenPane()<CR>
+nmap <Leader>cc :call VimuxInterruptRunner()<CR>
+nmap <Leader>j :call VimuxInspectRunner()<CR>
+nmap <Leader><CR> :call VimuxSendKeys('enter') <CR>
+nmap <leader>ce :call VimuxRunCommand(" exit ") <CR>
+nmap <Leader>ci :let VimuxRunnerPaneIndex = 
+
+nmap <leader>s  :w \| call VimuxRunCommand(" rspec --f-f") <CR>
+nmap <leader>2s  :w \| call VimuxRunCommand(" learn -b ") <CR>
+nmap <leader>S  :w \| call VimuxRunCommand(" learn && learn submit") <CR>
 "nmap <leader>S :w \| call VimuxRunCommand("learn && learn submit && exit") <CR>
-nmap <leader>Q  :w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec/*" .expand('%:t:r')."*") <CR>
-nmap <leader>1q :w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec/*" .expand('%:t:r')."* --f-f") <CR>
 nmap <leader>1s :call VimuxRunCommand(" rspec " .expand('%:p'). ":".line('.')) <CR>
 
 "db/schema.rb
@@ -462,9 +469,7 @@ nmap <leader>db :call VimuxRunCommand(" ccat db/schema.rb ") <CR>
 
 "rake routes
 nmap <leader>dr :call VimuxRunCommand(" rake routes ") <CR>
-
 nmap <leader>pry :call VimuxRunCommand(" pry ") <CR>
-nmap <leader>pe :call VimuxRunCommand(" exit ") <CR>
 nmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
 vmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
 
