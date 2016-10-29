@@ -30,6 +30,8 @@ cp $PA/colors/* $HOME/.vim/colors/
 
 cp $PA/fonts/* $HOME/Library/Fonts/
 
+cp $PA/onedark.itermcolors $HOME/onedark.itermcolors
+
 vim +BundleInstall +qall
 
 cat $PA/erubysign >> $HOME/.vim/bundle/vim-ruby/ftplugin/eruby.vim

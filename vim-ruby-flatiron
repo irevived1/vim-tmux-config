@@ -149,12 +149,11 @@ endif
 " let g:ycm_filetype_whitelist = { '*': 1 }
 " let g:ycm_auto_trigger = 1
 
-
+let g:ctrlp_show_hidden = 1
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/youcompleteme/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -165,7 +164,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-let g:closetag_filenames = "*.erb,*.html.erb,*.html,*.xhtml,*.phtml"
+let g:closetag_filenames = "*.erb,*.html.erb,*.html,*.xhtml,*.phtml,*.js"
 
 set omnifunc=syntaxcomplete#Complete
 
@@ -257,6 +256,7 @@ augroup Group1
   autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
   autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
   autocmd FileType ruby compiler ruby
+  autocmd FileType javascript UltiSnipsAddFiletypes html
 augroup END
 " autocmd FileType ruby let g:SuperTabDefaultCompletionType = "context"
 " Enable heavy omni completion.
@@ -321,7 +321,8 @@ let g:promptline_theme = 'airline'
 "colorscheme solarized
 "colorscheme srcery
 "colorscheme atomdark
-colorscheme gruvbox
+"colorscheme gruvbox
+colorscheme onedark
 
 " hi Normal ctermbg=none
 " hi Normal guibg=#1b202a
@@ -389,7 +390,6 @@ inoremap ß <ESC>:w <CR>
 
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
-
 nnoremap † :bn!<CR>
 nnoremap ˇ :bp!<CR>
 nnoremap œ :bd<CR>
@@ -406,23 +406,6 @@ nnoremap <leader>t :TagbarToggle<CR>
 "nnoremap ˚ <C-W>k
 "nnoremap ¬ <C-W>l
 "COPYING INTO REGISTERS
-nnoremap ; :
-vnoremap a "jy
-vnoremap z "ky
-vnoremap x "ly
-nnoremap å "jp
-nnoremap Ω "kp
-nnoremap ≈ "lp
-
-inoremap <M-h> <C-o>h
-inoremap ˙ <C-o>h
-inoremap ∆ <C-o>gj
-inoremap ˚ <C-o>gk
-inoremap ¬ <C-o>l
-inoremap ∑ <C-o>w
-inoremap ∫ <C-o>b
-inoremap ø <C-o>o
-inoremap Ø <C-o>O
 
 nnoremap <CR> o<ESC>
 
@@ -454,9 +437,16 @@ function! P_Compile()
   endif
 endfunc
 
+inoremap ® <ESC>:call VimuxRunCommand(getline('.') ." ")<CR>0D
+
 nmap <leader>q  :w \| call VimuxRunCommand(P_Compile()) <CR>
 nmap <leader>k  :w \| call VimuxRunCommand("!!") <CR>
 " nmap <leader>k  :w \| call VimuxRunLastCommand() <CR>
+" for scrolling in running pane
+nmap µ :call VimuxRunCommand(" tmux copy-mode -t ". VimuxRunnerPaneIndex ) <CR>
+nmap ∆ :call VimuxSendKeys('C-d') <CR>
+nmap ˚ :call VimuxSendKeys('C-u') <CR>
+
 nmap <Leader>co :call VimuxOpenPane()<CR>
 nmap <Leader>cc :call VimuxInterruptRunner()<CR>
 nmap <Leader>j :call VimuxInspectRunner()<CR>
@@ -466,6 +456,9 @@ nmap <Leader>ci :let VimuxRunnerPaneIndex =
 
 nmap <leader>s  :w \| call VimuxRunCommand(" rspec --f-f") <CR>
 nmap <leader>2s  :w \| call VimuxRunCommand(" learn -b ") <CR>
+
+nmap <leader>3s  :w \| call VimuxRunCommand(" mocha test/*".expand('%:t:r')."*") <CR>
+
 nmap <leader>S  :w \| call VimuxRunCommand(" learn && learn submit") <CR>
 "nmap <leader>S :w \| call VimuxRunCommand("learn && learn submit && exit") <CR>
 nmap <leader>1s :call VimuxRunCommand(" rspec " .expand('%:p'). ":".line('.')) <CR>
@@ -478,9 +471,6 @@ nmap <leader>dr :call VimuxRunCommand(" rake routes ") <CR>
 nmap <leader>pry :call VimuxRunCommand(" pry ") <CR>
 nmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
 vmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
-
-"retab
-nmap <C-w>t :set tabstop=2 \| retab! \| set tabstop=4 <cr>
 
 " nmap <C-w>n :NERDTreeTabsToggle<cr>
 " nmap <leader>n :NERDTreeTabsToggle<cr>
