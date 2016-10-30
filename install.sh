@@ -31,6 +31,7 @@ cp $PA/colors/* $HOME/.vim/colors/
 cp $PA/fonts/* $HOME/Library/Fonts/
 
 cp $PA/onedark.itermcolors $HOME/onedark.itermcolors
+cp $PA/deepspace.itermcolors $HOME/deepspace.itermcolors
 
 vim +BundleInstall +qall
 
