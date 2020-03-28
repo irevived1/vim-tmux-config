@@ -1,0 +1,13 @@
+{
+  "list.insertMappings": {
+    "<C-t>": "action:tabe",
+    "<C-v>": "action:vsplit",
+    "<C-s>": "action:split",
+    "<C-w>": "do:switch"
+  },
+  "snippets.extends": {
+    "javascriptreact": ["javascript"],
+    "typescriptreact": ["javascript"],
+    "typescript": ["javascript"]
+  }
+}
