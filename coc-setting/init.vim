@@ -59,7 +59,7 @@ set background=dark        " for the light version
 colorscheme one
 " colorscheme OceanicNext
 "
-let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json']
+let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-prettier']
 let g:python3_host_prog="/usr/local/bin/python3"
 let g:python2_host_prog="/usr/local/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
@@ -117,17 +117,27 @@ nmap <silent> <C-f> <Plug>(coc-cursors-position)
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
+"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 nnoremap ; :
 nnoremap <C-p> :CocList files<CR>
 nnoremap <C-[> :CocListResume<CR>
 nnoremap <leader>fw :CocSearch 
+nmap gd	:call CocAction('jumpDefinition', 'drop')<CR>
 inoremap <C-z> <space>
+
+vmap <leader>pf  <Plug>(coc-format-selected)
+nmap <leader>pf  <Plug>(coc-format-selected)
+nmap <leader>fp  :CocCommand prettier.formatFile<CR>
 
 let g:closetag_filenames = "*.erb,*.html.erb,*.html,*.xhtml,*.phtml,*.js"
 
