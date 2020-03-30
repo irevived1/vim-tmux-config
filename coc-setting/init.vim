@@ -30,9 +30,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'
 Plug 'benmills/vimux'
 
+Plug 'luochen1990/rainbow'
 Plug 'honza/vim-snippets'
 Plug 'ap/vim-css-color'
 Plug 'epilande/vim-react-snippets'
+Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
 Plug 'alvan/vim-closetag'
@@ -64,6 +66,11 @@ let g:python3_host_prog="/usr/local/bin/python3"
 let g:python2_host_prog="/usr/local/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
 
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
 inoremap df <Esc>
 
 " Config
@@ -73,6 +80,7 @@ set clipboard=unnamed
 
 let mapleader = ","
 nmap <leader>n :NERDTreeToggle<cr>
+nmap <leader>N :NERDTreeFind<cr>
 nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
 
 set listchars=tab:\ \ ,eol:¬
@@ -97,9 +105,16 @@ augroup mygroup
 augroup end
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
+
+if has('patch8.1.1068')
+  " Use `complete_info` if your (Neo)Vim version supports it.
+  inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-j>"
+else
+  imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-j>"
+endif
 
 " :nmap - Display normal mode maps
 " :imap - Display insert mode maps

@@ -9,5 +9,6 @@
     "javascriptreact": ["javascript"],
     "typescriptreact": ["javascript"],
     "typescript": ["javascript"]
-  }
+  },
+	"suggest.snippetIndicator": " ⭐︎",
 }
