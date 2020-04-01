@@ -10,5 +10,11 @@
     "typescriptreact": ["javascript"],
     "typescript": ["javascript"]
   },
+//	"suggest.noselect": false,
+	"suggest.preferCompleteThanJumpPlaceholder": true,
 	"suggest.snippetIndicator": " ⭐︎",
+	"emmet.includeLanguages": {
+		"vue-html": "html",
+		"javascript": "javascriptreact"
+	}
 }

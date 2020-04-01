@@ -46,6 +46,20 @@ Plug 'rakr/vim-one'
 
 call plug#end()
 
+
+set hidden
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
 " For Neovim 0.1.3 and 0.1.4
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
@@ -67,7 +81,7 @@ let g:python2_host_prog="/usr/local/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+" nmap <leader>rn <Plug>(coc-rename)
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
@@ -109,9 +123,11 @@ augroup end
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
 
+inoremap <silent><expr> <C-n> pumvisible() ? "\<C-n>" : coc#refresh()
+
 if has('patch8.1.1068')
   " Use `complete_info` if your (Neo)Vim version supports it.
-  inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-j>"
+  inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-n>\<C-y>"
 else
   imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-j>"
 endif
@@ -146,6 +162,7 @@ nnoremap <S-Tab> gT
 nnoremap ; :
 nnoremap <C-p> :CocList files<CR>
 nnoremap <C-[> :CocListResume<CR>
+nnoremap <C-b> :CocList windows<CR>
 nnoremap <leader>fw :CocSearch 
 nmap gd	:call CocAction('jumpDefinition', 'drop')<CR>
 inoremap <C-z> <space>
@@ -283,6 +300,7 @@ nmap <leader>3s  :w \| call VimuxRunCommand(" mocha test/*".expand('%:t:r')."*")
 nmap <leader>S  :w \| call VimuxRunCommand(" learn && learn submit") <CR>
 nmap <leader>1s :call VimuxRunCommand(" bundle exec rspec " .expand('%:p'). ":".line('.')) <CR>
 
+nmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
 vmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
 
 nmap <leader>fn :let @*=expand('%:t') \| let @+=expand('%:t')<CR>
