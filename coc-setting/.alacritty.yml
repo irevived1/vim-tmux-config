@@ -1,0 +1,23 @@
+font:
+  # The normal (roman) font face to use.
+  normal:
+    family: 'DejaVu Sans Mono for Powerline'
+    # Style can be specified to pick a specific face.
+    style: 'Book'
+
+  # The bold font face
+  bold:
+    family: 'SF Mono'
+    # Style can be specified to pick a specific face.
+    style: 'Bold'
+
+  # The italic font face
+  italic:
+    family: 'SF Mono'
+    # Style can be specified to pick a specific face.
+    style: 'Regular Italic'
+
+colors:
+  # Default colors
+  primary:
+    background: '#282c34'
