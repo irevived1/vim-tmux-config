@@ -129,7 +129,7 @@ if has('patch8.1.1068')
   " Use `complete_info` if your (Neo)Vim version supports it.
   inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-n>\<C-y>"
 else
-  imap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-j>"
+  imap <expr> <C-j> (pumvisible() && empty(v:completed_item)) != 1 ? "\<C-y>" : "\<C-n>\<C-y>"
 endif
 
 " :nmap - Display normal mode maps
