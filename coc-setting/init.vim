@@ -30,6 +30,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'
 Plug 'benmills/vimux'
 
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 Plug 'luochen1990/rainbow'
 Plug 'honza/vim-snippets'
 Plug 'ap/vim-css-color'
@@ -75,9 +77,9 @@ set background=dark        " for the light version
 colorscheme one
 " colorscheme OceanicNext
 "
-let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-prettier']
-let g:python3_host_prog="/usr/local/bin/python3"
-let g:python2_host_prog="/usr/local/bin/python2"
+let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-prettier', 'coc-java', 'coc-go']
+let g:python3_host_prog="/usr/bin/python3"
+let g:python2_host_prog="/usr/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
 
 " Symbol renaming.
@@ -164,6 +166,7 @@ nnoremap ; :
 nnoremap <C-p> :CocList files<CR>
 nnoremap <C-[> :CocListResume<CR>
 nnoremap <C-b> :CocList windows<CR>
+nnoremap <leader>v :call CocAction("doHover")<cr>
 nnoremap <leader>fw :CocSearch 
 nmap gd	:call CocAction('jumpDefinition', 'drop')<CR>
 inoremap <C-z> <space>

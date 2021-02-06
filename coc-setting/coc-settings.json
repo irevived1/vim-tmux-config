@@ -11,6 +11,8 @@
     "typescript": ["javascript"]
   },
 //	"suggest.noselect": false,
+  "suggest.languageSourcePriority": 10,
+  "snippets.priority": 200,
 	"suggest.preferCompleteThanJumpPlaceholder": true,
 	"suggest.snippetIndicator": " ⭐︎",
 	"emmet.includeLanguages": {
