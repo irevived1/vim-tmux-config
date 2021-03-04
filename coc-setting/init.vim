@@ -31,8 +31,10 @@ Plug 'tpope/vim-commentary'
 Plug 'benmills/vimux'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'puremourning/vimspector'
 
 Plug 'luochen1990/rainbow'
+Plug 'sheerun/vim-polyglot'
 Plug 'honza/vim-snippets'
 Plug 'ap/vim-css-color'
 Plug 'epilande/vim-react-snippets'
@@ -61,6 +63,7 @@ set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
+set mouse=a
 
 " For Neovim 0.1.3 and 0.1.4
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -83,7 +86,7 @@ let g:python2_host_prog="/usr/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
 
 " Symbol renaming.
-" nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>cr <Plug>(coc-rename)
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
@@ -92,7 +95,8 @@ inoremap df <Esc>
 " Config
 set number
 set relativenumber
-set clipboard=unnamed
+" set clipboard=unnamed
+set clipboard=unnamedplus
 
 let mapleader = ","
 nmap <leader>n :NERDTreeToggle<cr>
@@ -195,7 +199,7 @@ let g:promptline_theme = 'airline'
 
 au VimEnter * IndentGuidesEnable
 let g:indent_guides_auto_colors = 0
-augroup Group1  
+augroup Group1
   autocmd!
   autocmd InsertEnter * set timeoutlen=200
   autocmd InsertLeave * set timeoutlen=200
@@ -244,6 +248,9 @@ function! P_Compile()
     return c
   elseif ( i == 'js' )
     let c =  " node " .expand('%:p')
+    return c
+  elseif ( i == 'go' )
+    let c =  " go run " .expand('%:p')
     return c
   else
     let c = " echo lol no compiler found "
@@ -313,16 +320,40 @@ nmap <leader>ap :let @*=expand('%:p') \| let @+=expand('%:p')<CR>
 
 nmap <leader>a "a
 nmap <leader>s "s
-nmap <leader>d "d
+" nmap <leader>d "d
 nmap <leader>f "f
 nmap <leader>g "g
 
 vmap <leader>a "a
 vmap <leader>s "s
-vmap <leader>d "d
+" vmap <leader>d "d
 vmap <leader>f "f
 vmap <leader>g "g
 
 nnoremap <CR> o<ESC>
 inoremap <C-z> <space>
 nnoremap <C-z> <space>
+
+" must define after loading vimspector
+nmap <leader>dc <Plug>VimspectorContinue()
+nmap <leader>dp <Plug>VimspectorStop()
+nmap <leader>ds <Plug>VimspectorRestart()
+" nmap <leader>dp <Plug>VimspectorPause()<CR>
+nmap <leader>dt <Plug>VimspectorToggleBreakpoint()
+" nmap <leader>d <Plug>VimspectorToggleConditionalBreakpoint()<CR>
+" nmap <leader>d <Plug>VimspectorAddFunctionBreakpoint()<CR>
+nmap <leader>do <Plug>VimspectorStepOver()
+nmap <leader>di <Plug>VimspectorStepInto()
+nmap <leader>du <Plug>VimspectorStepOut()
+nmap <leader>dn <Plug>VimspectorRunToCursor()
+nmap <leader>dv <Plug>VimspectorBalloonEval()
+xmap <leader>dw <Plug>VimspectorBalloonEval()
+
+" xmap <expr> <Leader>dr <SID>vimspector_eval()
+nnoremap <expr> <Leader>dr <SID>vimspector_eval()
+fu! s:vimspector_eval() abort
+    return ":\<C-u>VimspectorEval " . getline('.')
+endfu
+
+nmap <leader>dw :VimspectorWatch 
+nmap <leader>dx :VimspectorReset<CR>

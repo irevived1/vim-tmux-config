@@ -1,0 +1,20 @@
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "attach",
+        "type": "node",
+        "protocol": "auto",
+        "stopOnEntry": true,
+        "port": 9229,
+        "console": "integratedTerminal",
+        "cwd": "${workspaceRoot}",
+        "breakpoints": {
+          "exception": {
+          }
+        }
+      }
+    }
+  }
+}
