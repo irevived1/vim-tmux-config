@@ -286,9 +286,16 @@ function! Linter()
   endif
 endfunc
 
+function! GetSelection()
+    let old_reg = getreg("v")
+    normal! gv"vy
+    let raw_search = getreg("v")
+    call setreg("v", old_reg)
+    return substitute(escape(raw_search, '\/.*$^~[]'), "\n", "\<CR>", "g")
+endfunction
+
 "remove below when done, tmp configs
 nnoremap <leader>z :call NumberToggle()<cr>
-inoremap ® <ESC>:call VimuxRunCommand(getline('.') ." ")<CR>0D
 
 nmap <leader>q  :w \| call VimuxRunCommand(P_Compile()) <CR>
 nmap <leader>w  :w \| call VimuxRunCommand(K_Compile()) <CR>
@@ -312,7 +319,7 @@ nmap <leader>S  :w \| call VimuxRunCommand(" learn && learn submit") <CR>
 nmap <leader>1s :call VimuxRunCommand(" bundle exec rspec " .expand('%:p'). ":".line('.')) <CR>
 
 nmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
-vmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
+vmap <leader>r :<C-u>call VimuxRunCommand(GetSelection()) <CR>
 
 nmap <leader>fn :let @*=expand('%:t') \| let @+=expand('%:t')<CR>
 nmap <leader>fr :let @*=expand('%') \| let @+=expand('%')<CR>
@@ -349,11 +356,13 @@ nmap <leader>dn <Plug>VimspectorRunToCursor()
 nmap <leader>dv <Plug>VimspectorBalloonEval()
 xmap <leader>dw <Plug>VimspectorBalloonEval()
 
-" xmap <expr> <Leader>dr <SID>vimspector_eval()
-nnoremap <expr> <Leader>dr <SID>vimspector_eval()
-fu! s:vimspector_eval() abort
-    return ":\<C-u>VimspectorEval " . getline('.')
-endfu
+function! VimspectorEvalFunc(is_visual)
+  execute ":VimspectorEval " . (a:is_visual ? GetSelection() : getline('.'))
+endfunction
+
+command! -nargs=1 VimspectorEvalFuncCmd call VimspectorEvalFunc(<args>)
+xmap <Leader>dr :<C-u>VimspectorEvalFuncCmd(1)<CR>
+nnoremap <Leader>dr :VimspectorEvalFuncCmd(0)<CR>
 
 nmap <leader>dw :VimspectorWatch 
 nmap <leader>dx :VimspectorReset<CR>
