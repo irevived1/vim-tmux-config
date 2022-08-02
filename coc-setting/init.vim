@@ -129,14 +129,14 @@ augroup end
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
 
-inoremap <silent><expr> <C-n> pumvisible() ? "\<C-n>" : coc#refresh()
+inoremap <silent><expr> <C-n> coc#pum#visible() ? "\<C-n>" : coc#refresh()
 
 if exists('*complete_info')
   " Use `complete_info` if your (Neo)Vim version supports it.
   " inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-n>\<C-y>"
   inoremap <expr> <C-j> coc#_select_confirm()
 else
-  imap <expr> <C-j> (pumvisible() && empty(v:completed_item)) != 1 ? "\<C-y>" : "\<C-n>\<C-y>"
+  imap <expr> <C-j> (coc#pum#visible() && empty(v:completed_item)) != 1 ? "\<C-y>" : "\<C-n>\<C-y>"
 endif
 
 " :nmap - Display normal mode maps
