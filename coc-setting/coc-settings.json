@@ -1,4 +1,5 @@
 {
+  "list.source.files.args": ["-L", "--files"],
   "list.insertMappings": {
     "<C-t>": "action:tabe",
     "<C-v>": "action:vsplit",
@@ -10,7 +11,7 @@
     "typescriptreact": ["javascript"],
     "typescript": ["javascript"]
   },
-//	"suggest.noselect": false,
+  "suggest.noselect": true,
   "suggest.languageSourcePriority": 10,
   "coc.preferences.jumpCommand": "drop",
   "snippets.priority": 200,
