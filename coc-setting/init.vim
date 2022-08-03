@@ -129,7 +129,8 @@ augroup end
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
 
-inoremap <silent><expr> <C-n> coc#pum#visible() ? "\<C-n>" : coc#refresh()
+" inoremap <silent><expr> <C-n> coc#pum#visible() ? "\<C-n>" : coc#refresh()
+inoremap <silent><expr> <C-n> coc#pum#visible() ? coc#pum#next(1) : "\<C-n>"
 
 if exists('*complete_info')
   " Use `complete_info` if your (Neo)Vim version supports it.
