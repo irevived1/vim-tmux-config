@@ -87,7 +87,7 @@ let g:python3_host_prog="/usr/bin/python3"
 let g:ruby_host_prog="/usr/bin/ruby"
 
 " Symbol renaming.
-nma <leader>cr <Plug>(coc-rename)
+nmap <leader>cr <Plug>(coc-rename)
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
