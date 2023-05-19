@@ -76,21 +76,24 @@ endif
 " Theme
 syntax enable
 set background=dark        " for the light version
-" let g:one_allow_italics = 1 " I love italic for comments
+let g:one_allow_italics = 1 " I love italic for comments
 colorscheme one
+" highlight Comment cterm=italic gui=italic
 " colorscheme OceanicNext
 "
-let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-prettier', 'coc-java', 'coc-go']
+let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-eslint', 'coc-java', 'coc-go', 'coc-flutter']
 let g:python3_host_prog="/usr/bin/python3"
-let g:python2_host_prog="/usr/bin/python2"
+" let g:python2_host_prog="/usr/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
 
 " Symbol renaming.
-nmap <leader>cr <Plug>(coc-rename)
+nma <leader>cr <Plug>(coc-rename)
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 inoremap df <Esc>
+nnoremap ' `
+nnoremap ` '
 
 " Config
 set number
@@ -98,7 +101,7 @@ set relativenumber
 " set clipboard=unnamed
 set clipboard=unnamedplus
 
-let mapleader = ","
+let mapleader = "\<Space>"
 nmap <leader>n :NERDTreeToggle<cr>
 nmap <leader>N :NERDTreeFind<cr>
 nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
@@ -156,17 +159,6 @@ nmap <silent> <C-f> <Plug>(coc-cursors-position)
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~ '\s'
-" endfunction
-"
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 nnoremap ; :
 nnoremap <C-p> :CocList files<CR>
 nnoremap <C-[> :CocListResume<CR>
@@ -178,7 +170,9 @@ inoremap <C-z> <space>
 
 vmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>pf  <Plug>(coc-format-selected)
-nmap <leader>fp  :CocCommand prettier.formatFile<CR>
+" nmap <leader>fp  :CocCommand prettier.formatFile<CR>
+nmap <leader>fp  :CocCommand eslint.executeAutofix<CR>
+nmap <leader>c  :CocCommand 
 
 let g:closetag_filenames = "*.erb,*.html.erb,*.html,*.xhtml,*.phtml,*.js"
 
@@ -325,6 +319,9 @@ vmap <leader>r :<C-u>call VimuxRunCommand(GetSelection()) <CR>
 nmap <leader>fn :let @*=expand('%:t') \| let @+=expand('%:t')<CR>
 nmap <leader>fr :let @*=expand('%') \| let @+=expand('%')<CR>
 nmap <leader>ap :let @*=expand('%:p') \| let @+=expand('%:p')<CR>
+
+xmap <leader><space>  <Plug>(coc-codeaction-selected)
+nmap <leader><space>  <Plug>(coc-codeaction-selected)
 
 nmap <leader>a "a
 nmap <leader>s "s
