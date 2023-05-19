@@ -86,9 +86,6 @@ let g:python3_host_prog="/usr/bin/python3"
 " let g:python2_host_prog="/usr/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
 
-" Symbol renaming.
-nmap <leader>cr <Plug>(coc-rename)
-
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 inoremap df <Esc>
@@ -151,6 +148,8 @@ endif
 " :cmap - Display command-line mode maps
 " :omap - Display operator pending mode maps
 
+" Symbol renaming.
+nmap <leader>cr <Plug>(coc-rename)
 nmap <silent> <C-f> <Plug>(coc-cursors-position)
 
 "retab
@@ -172,7 +171,8 @@ vmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>pf  <Plug>(coc-format-selected)
 " nmap <leader>fp  :CocCommand prettier.formatFile<CR>
 nmap <leader>fp  :CocCommand eslint.executeAutofix<CR>
-nmap <leader>c  :CocCommand 
+nmap <leader>cm  :CocCommand 
+autocmd FileType dart nmap <buffer> <leader>cf :CocCommand flutter.
 
 let g:closetag_filenames = "*.erb,*.html.erb,*.html,*.xhtml,*.phtml,*.js"
 
