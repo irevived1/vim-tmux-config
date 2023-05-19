@@ -15,10 +15,13 @@
   "suggest.languageSourcePriority": 10,
   "coc.preferences.jumpCommand": "drop",
   "snippets.priority": 200,
-	"suggest.preferCompleteThanJumpPlaceholder": true,
-	"suggest.snippetIndicator": " ⭐︎",
-	"emmet.includeLanguages": {
-		"vue-html": "html",
-		"javascript": "javascriptreact"
-	}
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  "suggest.snippetIndicator": " ⭐︎",
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "javascript": "javascriptreact"
+  },
+  "coc.preferences.formatOnSaveFiletypes": [
+    "dart"
+  ]
 }
