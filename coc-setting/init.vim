@@ -127,18 +127,23 @@ augroup end
 " Use <C-j> for both expand and jump (make expand higher priority.)
 " imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
 
+let g:coc_snippet_prev = '<C-k>'
 " inoremap <silent><expr> <C-n> coc#pum#visible() ? "\<C-n>" : coc#refresh()
 inoremap <silent><expr> <C-n> coc#pum#visible() ? coc#pum#next(1) : "\<C-n>"
 
-if exists('*complete_info')
-  " Use `complete_info` if your (Neo)Vim version supports it.
-  " inoremap <expr> <C-j> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-n>\<C-y>"
-  inoremap <expr> <C-j> coc#_select_confirm()
-else
-  imap <expr> <C-j> (coc#pum#visible() && empty(v:completed_item)) != 1 ? "\<C-y>" : "\<C-n>\<C-y>"
-endif
+inoremap <silent><expr> <C-j>
+      \ coc#pum#visible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ coc#refresh()
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use <c-space> to trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " :nmap - Display normal mode maps
 " :imap - Display insert mode maps
@@ -292,7 +297,7 @@ endfunction
 "remove below when done, tmp configs
 nnoremap <leader>z :call NumberToggle()<cr>
 
-nmap <leader>q  :w \| call VimuxRunCommand(P_Compile()) <CR>
+nmap <leader>cq  :w \| call VimuxRunCommand(P_Compile()) <CR>
 nmap <leader>w  :w \| call VimuxRunCommand(K_Compile()) <CR>
 nmap <leader>k  :w \| call VimuxRunCommand("!!") <CR>
 nmap <leader>fo :w \| call VimuxRunCommand(Linter()) <CR>
@@ -304,7 +309,7 @@ nmap <Leader>co :call VimuxOpenPane()<CR>
 nmap <Leader>cc :call VimuxInterruptRunner()<CR>
 nmap <Leader>j :call VimuxInspectRunner()<CR>
 nmap <Leader><CR> :call VimuxSendKeys('enter') <CR>
-nmap <leader>ce :call VimuxRunCommand(" exit ") <CR>
+nmap <leader>ct :call VimuxRunCommand(" exit ") <CR>
 nmap <Leader>ci :let VimuxRunnerIndex = 
 
 nmap <leader>3s  :w \| call VimuxRunCommand(" bundle exec rspec --f-f") <CR>
@@ -313,8 +318,8 @@ nmap <leader>3s  :w \| call VimuxRunCommand(" mocha test/*".expand('%:t:r')."*")
 nmap <leader>S  :w \| call VimuxRunCommand(" learn && learn submit") <CR>
 nmap <leader>1s :call VimuxRunCommand(" bundle exec rspec " .expand('%:p'). ":".line('.')) <CR>
 
-nmap <leader>r :call VimuxRunCommand(getline('.') ." ") <CR>
-vmap <leader>r :<C-u>call VimuxRunCommand(GetSelection()) <CR>
+nmap <leader>ce :call VimuxRunCommand(getline('.') ." ") <CR>
+vmap <leader>ce :<C-u>call VimuxRunCommand(GetSelection()) <CR>
 
 nmap <leader>fn :let @*=expand('%:t') \| let @+=expand('%:t')<CR>
 nmap <leader>fr :let @*=expand('%') \| let @+=expand('%')<CR>
@@ -322,6 +327,17 @@ nmap <leader>ap :let @*=expand('%:p') \| let @+=expand('%:p')<CR>
 
 xmap <leader><space>  <Plug>(coc-codeaction-selected)
 nmap <leader><space>  <Plug>(coc-codeaction-selected)
+" Remap keys for applying code actions at the cursor position
+nmap <leader><space>c  <Plug>(coc-codeaction-cursor)
+" Remap keys for apply code actions affect whole buffer
+nmap <leader><space>s  <Plug>(coc-codeaction-source)
+" Apply the most preferred quickfix action to fix diagnostic on the current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Remap keys for applying refactor code actions
+nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
+xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 
 nmap <leader>a "a
 nmap <leader>s "s
