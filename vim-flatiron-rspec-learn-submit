@@ -1,8 +1,0 @@
-"VIMUX plugin is required for the following functions
-
-nmap <leader>s	:w \| call VimuxRunCommand("rspec --f-f") <CR>
-nmap <leader>Q	:w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec/*" .expand('%:t:r')."*") <CR>
-nmap <leader>1q	:w \| call VimuxRunCommand(" rspec " .expand('%:p:h'). "/../spec/*" .expand('%:t:r')."* --f-f") <CR>
-nmap <leader>1s	:w \| call VimuxRunCommand(" rspec " .expand('%:p'). ":".line('.')) <CR>
-
-nmap <leader>S	:w \| call VimuxRunCommand("learn && learn submit && exit") <CR>
