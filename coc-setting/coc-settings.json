@@ -13,7 +13,6 @@
   },
   "suggest.noselect": true,
   "suggest.languageSourcePriority": 10,
-  "coc.preferences.jumpCommand": "drop",
   "snippets.priority": 200,
   "suggest.preferCompleteThanJumpPlaceholder": true,
   "suggest.snippetIndicator": " ⭐︎",
