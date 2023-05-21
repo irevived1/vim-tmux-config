@@ -86,7 +86,6 @@ set background=dark        " for the light version
 let g:one_allow_italics = 1 " I love italic for comments
 colorscheme one
 " highlight Comment cterm=italic gui=italic
-" colorscheme OceanicNext
 "
 let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-eslint', 'coc-java', 'coc-go', 'coc-flutter']
 let g:python3_host_prog="/usr/bin/python3"
@@ -178,6 +177,8 @@ nmap <silent> <C-f> <Plug>(coc-cursors-position)
 "retab
 " nmap <C-w>t :set tabstop=2 \| retab! \| set tabstop=2 <cr>
 
+nnoremap <leader>w  <C-w>
+nnoremap <C-w> <C-i>
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 
@@ -214,7 +215,6 @@ let g:airline#extensions#tabline#show_tabs = 1
 let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
 let g:promptline_theme = 'airline'
-" colorscheme onedark
 
 au VimEnter * IndentGuidesEnable
 let g:indent_guides_auto_colors = 0
@@ -317,7 +317,7 @@ endfunction
 nnoremap <leader>z :call NumberToggle()<cr>
 
 nmap <leader>cq  :w \| call VimuxRunCommand(P_Compile()) <CR>
-nmap <leader>w  :w \| call VimuxRunCommand(K_Compile()) <CR>
+" nmap <leader>w  :w \| call VimuxRunCommand(K_Compile()) <CR>
 nmap <leader>k  :w \| call VimuxRunCommand("!!") <CR>
 nmap <leader>fo :w \| call VimuxRunCommand(Linter()) <CR>
 
