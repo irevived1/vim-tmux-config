@@ -21,7 +21,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
-Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -47,6 +46,14 @@ Plug 'tpope/vim-endwise'
 "THEME
 Plug 'mhartington/oceanic-next'
 Plug 'rakr/vim-one'
+
+
+if has('nvim')
+  Plug 'nvim-tree/nvim-tree.lua'
+  Plug 'nvim-tree/nvim-web-devicons'
+else
+  Plug 'scrooloose/nerdtree'
+endif
 
 call plug#end()
 
@@ -99,8 +106,19 @@ set relativenumber
 set clipboard=unnamedplus
 
 let mapleader = "\<Space>"
-nmap <leader>n :NERDTreeToggle<cr>
-nmap <leader>N :NERDTreeFind<cr>
+
+if has('nvim')
+  lua vim.g.loaded_netrw = 1
+  lua vim.g.loaded_netrwPlugin = 1
+  lua vim.opt.termguicolors = true
+  lua require("nvim-tree").setup()
+  nmap <leader>n :NvimTreeToggle<cr>
+  nmap <leader>N :NvimTreeFindFile<cr>
+else
+  nmap <leader>n :NERDTreeToggle<cr>
+  nmap <leader>N :NERDTreeFind<cr>
+endif
+
 nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
 
 set listchars=tab:\ \ ,eol:¬
@@ -169,7 +187,7 @@ nnoremap <C-[> :CocListResume<CR>
 nnoremap <C-b> :CocList windows<CR>
 nnoremap <leader>v :call CocAction("doHover")<cr>
 nnoremap <leader>fw :CocSearch 
-nmap gd	:call CocAction('jumpDefinition', 'drop')<CR>
+nmap gd	:call CocAction('jumpDefinition', 'tabe')<CR>
 inoremap <C-z> <space>
 
 vmap <leader>pf  <Plug>(coc-format-selected)
@@ -192,6 +210,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_tabs = 1
 
+" brew tap homebrew/cask-fonts && brew install --cask font-dejavu-sans-mono-nerd-font
 let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
 let g:promptline_theme = 'airline'
