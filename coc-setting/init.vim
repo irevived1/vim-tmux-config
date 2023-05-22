@@ -198,7 +198,7 @@ nnoremap <leader>v :call ShowDocumentation()<CR>
 
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\:CocList windows<CR>"
   inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
   inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -215,6 +215,8 @@ nmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>fp  :CocCommand eslint.executeAutofix<CR>
 nmap <leader>cm  :CocCommand 
 autocmd FileType dart nmap <buffer> <leader>cf :CocCommand flutter.
+autocmd FileType dart nmap <buffer> <leader>j :CocCommand flutter.dev.openDevLog<CR>
+nnoremap <leader>J <C-w>b<C-w>c
 
 let g:closetag_filenames = "*.erb,*.html.erb,*.html,*.xhtml,*.phtml,*.js"
 
@@ -344,7 +346,7 @@ nmap µ :execute "!tmux copy-mode -t " .VimuxRunnerIndex <CR><CR>
 
 nmap <Leader>co :call VimuxOpenPane()<CR>
 nmap <Leader>cc :call VimuxInterruptRunner()<CR>
-nmap <Leader>j :call VimuxInspectRunner()<CR>
+nmap <Leader>cj :call VimuxInspectRunner()<CR>
 nmap <Leader><CR> :call VimuxSendKeys('enter') <CR>
 nmap <leader>ct :call VimuxRunCommand(" exit ") <CR>
 nmap <Leader>ci :let VimuxRunnerIndex = 
