@@ -87,7 +87,7 @@ let g:one_allow_italics = 1 " I love italic for comments
 colorscheme one
 " highlight Comment cterm=italic gui=italic
 "
-let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-eslint', 'coc-java', 'coc-go', 'coc-flutter']
+let g:coc_global_extensions=[ 'coc-lists', 'coc-emmet', 'coc-calc', 'coc-tsserver', 'coc-snippets', 'coc-html', 'coc-css', 'coc-json', 'coc-eslint', 'coc-java', 'coc-go', 'coc-flutter', 'coc-pairs']
 let g:python3_host_prog="/usr/bin/python3"
 " let g:python2_host_prog="/usr/bin/python2"
 let g:ruby_host_prog="/usr/bin/ruby"
@@ -147,7 +147,7 @@ augroup end
 
 let g:coc_snippet_prev = '<C-k>'
 " inoremap <silent><expr> <C-n> coc#pum#visible() ? "\<C-n>" : coc#refresh()
-inoremap <silent><expr> <C-n> coc#pum#visible() ? coc#pum#next(1) : "\<C-n>"
+" inoremap <silent><expr> <C-n> coc#pum#visible() ? coc#pum#next(1) : "\<C-n>"
 
 inoremap <silent><expr> <C-j>
       \ coc#pum#visible() ? coc#_select_confirm() :
@@ -177,7 +177,7 @@ nmap <silent> <C-f> <Plug>(coc-cursors-position)
 "retab
 " nmap <C-w>t :set tabstop=2 \| retab! \| set tabstop=2 <cr>
 
-nnoremap <leader>w  <C-w>
+nnoremap <leader>w <C-w>
 nnoremap <C-w> <C-i>
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
@@ -186,7 +186,25 @@ nnoremap ; :
 nnoremap <C-p> :CocList files<CR>
 nnoremap <C-[> :CocListResume<CR>
 nnoremap <C-b> :CocList windows<CR>
-nnoremap <leader>v :call CocAction("doHover")<cr>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+nnoremap <leader>v :call ShowDocumentation()<CR>
+
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
 nnoremap <leader>fw :CocSearch 
 nmap gd	:call CocAction('jumpDefinition', 'tabe')<CR>
 inoremap <C-z> <space>
@@ -355,7 +373,9 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Remap keys for applying refactor code actions
 nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
-xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
+nnoremap <silent><nowait> <leader>cl :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <leader>cs :<C-u>CocList -I symbols<cr>
 nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 
 nmap <leader>a "a
