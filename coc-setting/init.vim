@@ -110,7 +110,7 @@ if has('nvim')
   lua vim.g.loaded_netrw = 1
   lua vim.g.loaded_netrwPlugin = 1
   lua vim.opt.termguicolors = true
-  lua require("nvim-tree").setup()
+  lua require "nvim-tree".setup({ diagnostics = { enable = true, } })
   nmap <leader>n :NvimTreeToggle<cr>
   nmap <leader>N :NvimTreeFindFile<cr>
 else
