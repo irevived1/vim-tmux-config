@@ -258,7 +258,7 @@ endfunction
 nnoremap <leader>v :call ShowDocumentation()<CR>
 
 if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Plug>(coc-cursors-position)"
   nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\:CocList windows<CR>"
   inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
   inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
@@ -433,14 +433,16 @@ nnoremap <silent><nowait> <leader>cl :<C-u>CocList outline<cr>
 nnoremap <silent><nowait> <leader>cs :<C-u>CocList -I symbols<cr>
 nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 
+nmap <silent><leader>s :w<cr>
+
 nmap <leader>a "a
-nmap <leader>s "s
+" nmap <leader>s "s
 " nmap <leader>d "d
 nmap <leader>f "f
 nmap <leader>g "g
 
 vmap <leader>a "a
-vmap <leader>s "s
+" vmap <leader>s "s
 " vmap <leader>d "d
 vmap <leader>f "f
 vmap <leader>g "g
