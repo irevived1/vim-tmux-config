@@ -28,6 +28,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'
 Plug 'benmills/vimux'
+Plug 'simeji/winresizer'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'puremourning/vimspector'
@@ -110,15 +111,22 @@ if has('nvim')
   lua vim.g.loaded_netrw = 1
   lua vim.g.loaded_netrwPlugin = 1
   lua vim.opt.termguicolors = true
-  lua require "nvim-tree".setup({ diagnostics = { enable = true, } })
-  nmap <leader>n :NvimTreeToggle<cr>
-  nmap <leader>N :NvimTreeFindFile<cr>
+
+  lua require "nvim-tree".setup(
+        \  {
+        \    diagnostics = {
+        \      enable = true,
+        \    },
+        \  }
+        \)
+  nmap ,n :NvimTreeToggle<cr>
+  nmap ,N :NvimTreeFindFile<cr>
 else
-  nmap <leader>n :NERDTreeToggle<cr>
-  nmap <leader>N :NERDTreeFind<cr>
+  nmap ,n :NERDTreeToggle<cr>
+  nmap ,N :NERDTreeFind<cr>
 endif
 
-nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
+nnoremap <silent><expr> ,h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
 
 set listchars=tab:\ \ ,eol:¬
 set list
@@ -179,13 +187,66 @@ nmap <silent> <C-f> <Plug>(coc-cursors-position)
 
 nnoremap <leader>w <C-w>
 nnoremap <C-w> <C-i>
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+
+" window resizing
+let g:winresizer_start_key = ',w'
+
+" TABS
+" nnoremap <Tab> gt
+" nnoremap <S-Tab> gT
+" let g:airline#extensions#tabline#show_buffers = 0
+" nmap gd	:call CocAction('jumpDefinition', 'tabe')<CR>
+" nnoremap <C-b> :CocList windows<CR>
+
+" BUFFERS
+function! Bnext() abort
+  bnext                                " Go to next buffer.
+  if len(win_findbuf(bufnr('%'))) > 1  " If buffer opened in more than one window,
+    call Bnext()                       "  then call func again to go to next one.
+  endif
+endfunction
+nnoremap <silent><Tab> :call Bnext()<CR>
+
+function! Bprevious() abort
+  bprevious
+  if len(win_findbuf(bufnr('%'))) > 1
+    call Bprevious()
+  endif
+endfunction
+nnoremap <silent><S-Tab> :call Bprevious()<CR>
+nnoremap <C-b> :CocList buffers<CR>
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+  if exists('t:zoomed') && t:zoomed
+    execute t:zoom_winrestcmd
+    let t:zoomed = 0
+  else
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+    let t:zoomed = 1
+  endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+
+set noequalalways
+set winfixheight
+" set winfixwidth
+" nnoremap <Tab> :bn<CR>
+" nnoremap <S-Tab> :bp<CR>
+" MacOS Only
+nnoremap œ :<C-U>bprevious <bar> bdelete #<CR>
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_splits = 0
+nmap gd	:call CocAction('jumpDefinition')<CR>
+
 
 nnoremap ; :
 nnoremap <C-p> :CocList files<CR>
 nnoremap <C-[> :CocListResume<CR>
-nnoremap <C-b> :CocList windows<CR>
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
@@ -197,7 +258,7 @@ endfunction
 nnoremap <leader>v :call ShowDocumentation()<CR>
 
 if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Plug>(coc-cursors-position)"
   nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\:CocList windows<CR>"
   inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
   inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
@@ -206,8 +267,6 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
 endif
 
 nnoremap <leader>fw :CocSearch 
-nmap gd	:call CocAction('jumpDefinition', 'tabe')<CR>
-inoremap <C-z> <space>
 
 vmap <leader>pf  <Plug>(coc-format-selected)
 nmap <leader>pf  <Plug>(coc-format-selected)
@@ -226,10 +285,6 @@ set lazyredraw
 set laststatus=2
 "
 set cursorline
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_tabs = 1
 
 " brew tap homebrew/cask-fonts && brew install --cask font-dejavu-sans-mono-nerd-font
 let g:airline_theme='bubblegum'
@@ -334,35 +389,33 @@ function! GetSelection()
 endfunction
 
 "remove below when done, tmp configs
-nnoremap <leader>z :call NumberToggle()<cr>
+nnoremap ,z :call NumberToggle()<cr>
 
-nmap <leader>cq  :w \| call VimuxRunCommand(P_Compile()) <CR>
+nmap ,cq  :w \| call VimuxRunCommand(P_Compile()) <CR>
 " nmap <leader>w  :w \| call VimuxRunCommand(K_Compile()) <CR>
-nmap <leader>k  :w \| call VimuxRunCommand("!!") <CR>
-nmap <leader>fo :w \| call VimuxRunCommand(Linter()) <CR>
+nmap ,k  :w \| call VimuxRunCommand("!!") <CR>
+nmap ,fo :w \| call VimuxRunCommand(Linter()) <CR>
 
 let g:VimuxRunnerIndex = 1
 nmap µ :execute "!tmux copy-mode -t " .VimuxRunnerIndex <CR><CR>
 
-nmap <Leader>co :call VimuxOpenPane()<CR>
-nmap <Leader>cc :call VimuxInterruptRunner()<CR>
-nmap <Leader>cj :call VimuxInspectRunner()<CR>
-nmap <Leader><CR> :call VimuxSendKeys('enter') <CR>
-nmap <leader>ct :call VimuxRunCommand(" exit ") <CR>
-nmap <Leader>ci :let VimuxRunnerIndex = 
+nmap ,co :call VimuxOpenPane()<CR>
+nmap ,cc :call VimuxInterruptRunner()<CR>
+nmap ,cj :call VimuxInspectRunner()<CR>
+nmap ,<CR> :call VimuxSendKeys('enter') <CR>
+nmap ,ct :call VimuxRunCommand(" exit ") <CR>
+nmap ,ci :let VimuxRunnerIndex = 
 
-nmap <leader>3s  :w \| call VimuxRunCommand(" bundle exec rspec --f-f") <CR>
-nmap <leader>3s  :w \| call VimuxRunCommand(" mocha test/*".expand('%:t:r')."*") <CR>
+" nmap ,3s  :w \| call VimuxRunCommand(" bundle exec rspec --f-f") <CR>
+" nmap ,3s  :w \| call VimuxRunCommand(" mocha test/*".expand('%:t:r')."*") <CR>
+" nmap ,1s :call VimuxRunCommand(" bundle exec rspec " .expand('%:p'). ":".line('.')) <CR>
 
-nmap <leader>S  :w \| call VimuxRunCommand(" learn && learn submit") <CR>
-nmap <leader>1s :call VimuxRunCommand(" bundle exec rspec " .expand('%:p'). ":".line('.')) <CR>
+nmap ,ce :call VimuxRunCommand(getline('.') ." ") <CR>
+vmap ,ce :<C-u>call VimuxRunCommand(GetSelection()) <CR>
 
-nmap <leader>ce :call VimuxRunCommand(getline('.') ." ") <CR>
-vmap <leader>ce :<C-u>call VimuxRunCommand(GetSelection()) <CR>
-
-nmap <leader>fn :let @*=expand('%:t') \| let @+=expand('%:t')<CR>
-nmap <leader>fr :let @*=expand('%') \| let @+=expand('%')<CR>
-nmap <leader>ap :let @*=expand('%:p') \| let @+=expand('%:p')<CR>
+nmap ,fn :let @*=expand('%:t') \| let @+=expand('%:t')<CR>
+nmap ,fr :let @*=expand('%') \| let @+=expand('%')<CR>
+nmap ,ap :let @*=expand('%:p') \| let @+=expand('%:p')<CR>
 
 xmap <leader><space>  <Plug>(coc-codeaction-selected)
 nmap <leader><space>  <Plug>(coc-codeaction-selected)
@@ -380,21 +433,23 @@ nnoremap <silent><nowait> <leader>cl :<C-u>CocList outline<cr>
 nnoremap <silent><nowait> <leader>cs :<C-u>CocList -I symbols<cr>
 nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 
+nmap <silent><leader>s :w<cr>
+
 nmap <leader>a "a
-nmap <leader>s "s
+" nmap <leader>s "s
 " nmap <leader>d "d
 nmap <leader>f "f
 nmap <leader>g "g
 
 vmap <leader>a "a
-vmap <leader>s "s
+" vmap <leader>s "s
 " vmap <leader>d "d
 vmap <leader>f "f
 vmap <leader>g "g
 
 nnoremap <CR> o<ESC>
 inoremap <C-z> <space>
-nnoremap <C-z> <space>
+nnoremap <silent><C-z> :ZoomToggle<CR>
 
 " must define after loading vimspector
 nmap <leader>dc <Plug>VimspectorContinue()
