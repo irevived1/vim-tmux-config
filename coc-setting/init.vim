@@ -156,6 +156,8 @@ augroup end
 let g:coc_snippet_prev = '<C-k>'
 " inoremap <silent><expr> <C-n> coc#pum#visible() ? "\<C-n>" : coc#refresh()
 " inoremap <silent><expr> <C-n> coc#pum#visible() ? coc#pum#next(1) : "\<C-n>"
+imap <silent><expr> <C-n> coc#pum#visible() ? "\<Down>" : "\<C-n>"
+imap <silent><expr> <C-p> coc#pum#visible() ? "\<Up>" : "\<C-p>"
 
 inoremap <silent><expr> <C-j>
       \ coc#pum#visible() ? coc#_select_confirm() :
