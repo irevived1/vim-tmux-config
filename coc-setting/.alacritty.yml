@@ -20,3 +20,12 @@ colors:
   # Default colors
   primary:
     background: '#282c34'
+
+# MacOS not triggering Ctrl-/
+key_bindings:
+  - { key: Slash,  mods: Control, chars: "\x1f" }
+
+# place following in ~/Library/KeyBindings/DefaultKeyBinding.dict
+# {
+#  "^/" = "noop:";
+# }
