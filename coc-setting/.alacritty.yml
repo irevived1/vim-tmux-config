@@ -6,25 +6,23 @@ font:
   size: 12
   # The normal (roman) font face to use.
   normal:
-    family: 'DejaVuSansM Nerd Font Mono'
+    family: "DejaVuSansM Nerd Font Mono"
 
   # The bold font face
   bold:
-    family: 'DejaVuSansM Nerd Font Mono'
+    family: "DejaVuSansM Nerd Font Mono"
 
   # The italic font face
   italic:
-    family: 'DejaVuSansM Nerd Font Mono'
+    family: "DejaVuSansM Nerd Font Mono"
 
 colors:
   # Default colors
   primary:
-    background: '#282c34'
+    background: "#21252b"
 
-# MacOS not triggering Ctrl-/
 key_bindings:
-  - { key: Slash,  mods: Control, chars: "\x1f" }
-
+  - { key: Slash, mods: Control, chars: "\x1f" }
 # place following in ~/Library/KeyBindings/DefaultKeyBinding.dict
 # {
 #  "^/" = "noop:";
